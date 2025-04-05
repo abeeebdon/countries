@@ -3,14 +3,10 @@
 import { continentOptions } from "@/components/Data";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
-interface ReqData {
-  name: {
-    common: string;
-  };
-}
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterOptions, setFilterOptions] = useState("");
@@ -18,7 +14,7 @@ const HomePage = () => {
   const [countries, setCountries] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const countriesPerPage = 12;
-
+  const router = useRouter();
   useEffect(() => {
     const fetchCountries = async () => {
       try {
@@ -62,9 +58,9 @@ const HomePage = () => {
       : setUrl(`https://restcountries.com/v3.1/region/${option}`);
   };
   return (
-    <main className="px-6">
+    <main className="px-6 ">
       <article className="mt-6 py-6 flex-between">
-        <div className="w-full sm:max-w-xs bg-dark-blue flex items-center gap-6 p-5 rounded-md">
+        <div className="w-full sm:max-w-xs component flex items-center gap-6 p-5 rounded-md">
           <label>
             <FaSearch />
           </label>
@@ -79,7 +75,7 @@ const HomePage = () => {
         </div>
         <article>
           <select
-            className="bg-dark-blue p-4 border-none outline-none"
+            className="component p-4 border-none outline-none"
             value={filterOptions}
             onChange={handleChange}
           >
@@ -102,29 +98,51 @@ const HomePage = () => {
             No countries found.
           </p>
         ) : (
-          currentCountries.map((country: any, index) => (
-            <article key={index} className=" rounded shadow max-w-xs">
-              <Image
-                src={country.flags.svg}
-                alt={country.name.common}
-                width={200}
-                height={100}
-                className="w-full h-[200px]"
-              />
-              <div>
-                <h2>{country.name.common}</h2>
+          currentCountries.map(
+            (
+              {
+                name: { common },
+                flags: { svg },
+                population,
+                region,
+                capital,
+              }: any,
+              index
+            ) => (
+              <article
+                key={index}
+                className="dark:bg-dark-blue rounded shadow max-w-xs cursor-pointer"
+                onClick={() => router.push(common)}
+              >
+                <Image
+                  src={svg}
+                  alt={common}
+                  width={200}
+                  height={100}
+                  className="w-full h-[200px]"
+                />
+                <div className="p-4 pb-10">
+                  <h2 className="font-semibold text-lg">{common}</h2>
 
-                <div className="space-y-2">
-                  <p>Population: {country.population}</p>
-                  <p>Region: {country.region}</p>
-                  <p>Capital: {country.capital}</p>
+                  <div className="mt-4 space-y-1 text-sm">
+                    <p className="font-medium">
+                      Population:{" "}
+                      <span className="font-normal">{population}</span>
+                    </p>
+                    <p className="font-medium">
+                      Region: <span className="font-normal">{region}</span>
+                    </p>
+                    <p className="font-medium">
+                      Capital: <span className="font-normal">{capital}</span>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))
+              </article>
+            )
+          )
         )}
       </section>
-      <div className="mt-10 py-10 flex justify-between items-center">
+      <div className="mt-10 p-10 flex justify-between items-center">
         <button
           onClick={handlePrev}
           disabled={currentPage === 1}

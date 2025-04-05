@@ -1,19 +1,19 @@
 @import "tailwindcss";
-
+@custom-variant dark (&:where(.dark, .dark *));
 :root {
-  --background: #ffffff;
+  --background: hsl(0, 0%, 98%);
   --foreground: hsl(200, 15%, 8%);
 }
 
 @theme {
   --color-dark-blue: hsl(209, 23%, 22%);
   --color-custom-blue900: #241623;
-  --color-yellow-icon: #fff856;
+  --color-light-text: hsl(200, 15%, 8%);
   --color-yellow-light: #f2cb00;
   --color-light-gray: #f9f9f9;
   --color-border-one: #c5e0ff;
   --color-text-primary: #1e1e1e;
-  --color-secondary-one: #1d1d1d;
+  --color-background-light: hsl(0, 0%, 98%);
 }
 @theme inline {
   --color-background: var(--background);
@@ -24,19 +24,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: hsl(207, 26%, 17%);
+    --background: #202c37;
     --foreground: white;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer utilities {
   .flex-between {
     @apply flex flex-col gap-4 sm:justify-between sm:items-center sm:flex-row;
+  }
+  .component {
+    @apply bg-white dark:bg-dark-blue;
   }
 }
