@@ -7,9 +7,6 @@ const ContinentFilter = ({ setUrl }: ContinentFilterProps) => {
   const [selectedContinent, setSelectedContinent] = useState(null);
   const handleChange = (selectedOption: any) => {
     setSelectedContinent(selectedOption);
-    !selectedOption
-      ? setUrl("https://restcountries.com/v3.1/all")
-      : setUrl(`https://restcountries.com/v3.1/region/${selectedOption.value}`);
   };
   const customStyles = {
     control: (provided: any, state: any) => ({
