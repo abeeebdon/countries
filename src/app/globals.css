@@ -2,9 +2,19 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: hsl(200, 15%, 8%);
 }
 
+@theme {
+  --color-dark-blue: hsl(209, 23%, 22%);
+  --color-custom-blue900: #241623;
+  --color-yellow-icon: #fff856;
+  --color-yellow-light: #f2cb00;
+  --color-light-gray: #f9f9f9;
+  --color-border-one: #c5e0ff;
+  --color-text-primary: #1e1e1e;
+  --color-secondary-one: #1d1d1d;
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -14,8 +24,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: hsl(207, 26%, 17%);
+    --foreground: white;
   }
 }
 
@@ -23,4 +33,10 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .flex-between {
+    @apply flex flex-col gap-4 sm:justify-between sm:items-center sm:flex-row;
+  }
 }
